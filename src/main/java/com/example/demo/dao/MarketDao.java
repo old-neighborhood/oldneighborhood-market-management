@@ -36,9 +36,9 @@ public interface MarketDao extends JpaRepository<Market, String> {
 
 	@Transactional
 	@Modifying
-	@Query(value="update market as m set m.m_state='zhuxiao' where m.m_name=?" ,
+	@Query(value="update market as m set m.m_state='zhuxiao' where m.m_ID=?" ,
 			nativeQuery=true)
-	void update(String m_name);
+	void update(String m_ID);
 	
 	@Transactional
 	@Modifying

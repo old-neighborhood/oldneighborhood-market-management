@@ -33,7 +33,7 @@ public interface MarketService {
 			String m_intro,
 			String m_ID
 			);
-	public void deleteMarket(String m_name);
+	public void deleteMarket(String m_ID);
 	public String getM_ID();
 	public Market getMarket(String m_ID);
 }

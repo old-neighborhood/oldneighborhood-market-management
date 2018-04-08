@@ -34,6 +34,7 @@ import sun.misc.BASE64Decoder;
     * @date 2018年3月27日  
     *    
     */
+@SuppressWarnings("restriction")
 @Controller
 public class MarketController {
 	@Resource
@@ -52,7 +53,7 @@ public class MarketController {
 	}
 	@RequestMapping("/setM_ID")
 	@ResponseBody
-	public String setM_ID(String m_ID) {
+	public String setM_ID(@RequestBody String m_ID) {
 		this.m_ID = m_ID;
 		System.out.println(m_ID);
 		return "{\"result\":\"success\"}";
@@ -67,7 +68,7 @@ public class MarketController {
 	
 	@RequestMapping("/getMarkets")
 	@ResponseBody
-	public List<Market> getMarketList(String s_ID){
+	public List<Market> getMarketList(@RequestBody String s_ID){
 		List<Market> markets = marketService.getMarkets(s_ID);
 		return markets;
 	}
@@ -93,7 +94,7 @@ public class MarketController {
 		if(reqMap.get("m_image")!=null&&reqMap.get("m_image").toString().length()>1000) {
 			String imgStr = reqMap.get("m_image").toString();
 			System.out.println("base64:"+imgStr);
-			String path = "C:\\pc\\workspace\\oldneighborhood-validate\\src\\main\\resources\\img\\market\\"+m_ID+".jpg";
+			String path = "C:\\pc\\workspace\\oldneighborhood-frontUI\\src\\main\\resources\\img\\market\\"+m_ID+".jpg";
 			imgStr = imgStr.replaceAll("data:image/jpeg;base64,", ""); 
 			BASE64Decoder decoder = new BASE64Decoder();
 			try {
@@ -137,7 +138,7 @@ public class MarketController {
 		
 		String imgStr = reqMap.get("m_image").toString();
 		System.out.println("base64:"+imgStr);
-		String path = "C:\\pc\\workspace\\oldneighborhood-validate\\src\\main\\resources\\img\\market\\"+ID+".jpg";
+		String path = "C:\\pc\\workspace\\oldneighborhood-frontUI\\src\\main\\resources\\img\\market\\"+ID+".jpg";
 		imgStr = imgStr.replaceAll("data:image/jpeg;base64,", ""); 
 		BASE64Decoder decoder = new BASE64Decoder();
 		try {
@@ -178,9 +179,9 @@ public class MarketController {
 	}
 	@RequestMapping("/deleteMarket")
 	@ResponseBody
-	public String deleteMarket(@RequestBody String m_name) {
-		System.out.println(m_name);
-		marketService.deleteMarket(m_name);
+	public String deleteMarket(@RequestBody String m_ID) {
+		System.out.println(m_ID);
+		marketService.deleteMarket(m_ID);
 		return "{\"result\":\"success\"}";
 	}
 }

@@ -66,8 +66,8 @@ public class MarketServiceImpl implements MarketService {
 	*/
 
 	@Override
-	public void deleteMarket(String m_name) {
-		marketDao.update(m_name);
+	public void deleteMarket(String m_ID) {
+		marketDao.update(m_ID);
 
 	}
 
