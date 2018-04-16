@@ -36,4 +36,5 @@ public interface MarketService {
 	public void deleteMarket(String m_ID);
 	public String getM_ID();
 	public Market getMarket(String m_ID);
+	public void recoverMarket(String m_ID);
 }

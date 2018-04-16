@@ -83,6 +83,7 @@ public class Market implements Serializable {
 	@NonNull
 	private String m_tele;
 	private String m_email;
+	@NonNull
 	private String m_intro;
 	@NonNull
 	private String m_state;

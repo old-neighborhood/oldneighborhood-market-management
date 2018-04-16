@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -39,29 +40,17 @@ import sun.misc.BASE64Decoder;
 public class MarketController {
 	@Resource
 	private MarketService marketService;
-	private String m_ID="";
 	@RequestMapping("/")
 	@ResponseBody
 	public String test1() {
 		return "/MarketList";
 	}
 	
-	@RequestMapping("/getM_ID")
-	@ResponseBody
-	public String getM_ID() {
-		return m_ID;
-	}
-	@RequestMapping("/setM_ID")
-	@ResponseBody
-	public String setM_ID(@RequestBody String m_ID) {
-		this.m_ID = m_ID;
-		System.out.println(m_ID);
-		return "{\"result\":\"success\"}";
-	}
+	
 	
 	@RequestMapping("/getMarket")
 	@ResponseBody
-	public Market getMarket() {
+	public Market getMarket(@RequestBody String m_ID) {
 		
 		return marketService.getMarket(m_ID);
 	}
@@ -81,20 +70,21 @@ public class MarketController {
 				reqMap.get("m_tele").toString()+" "+
 				reqMap.get("m_email").toString()+" "+
 				reqMap.get("m_intro").toString()+" "+
-				m_ID);
+				reqMap.get("m_ID").toString()
+				);
 		marketService.modifyMarket(
 				reqMap.get("m_name").toString(),
 				reqMap.get("m_address").toString(),
 				reqMap.get("m_tele").toString(),
 				reqMap.get("m_email").toString(),
 				reqMap.get("m_intro").toString(),
-				m_ID
+				reqMap.get("m_ID").toString()
 				);
 		
 		if(reqMap.get("m_image")!=null&&reqMap.get("m_image").toString().length()>1000) {
 			String imgStr = reqMap.get("m_image").toString();
 			System.out.println("base64:"+imgStr);
-			String path = "C:\\pc\\workspace\\oldneighborhood-frontUI\\src\\main\\resources\\img\\market\\"+m_ID+".jpg";
+			String path = "C:\\pc\\workspace\\oldneighborhood-frontUI\\src\\main\\resources\\img\\market\\"+reqMap.get("m_ID").toString()+".jpg";
 			imgStr = imgStr.replaceAll("data:image/jpeg;base64,", ""); 
 			BASE64Decoder decoder = new BASE64Decoder();
 			try {
@@ -125,15 +115,8 @@ public class MarketController {
 	@ResponseBody
 	public String addMarket(@RequestBody Map<String,Object> reqMap) {
 		//System.out.println(key);
-		String m_ID = marketService.getM_ID();
-		m_ID = m_ID.replace("SP","");
-		int num = Integer.parseInt(m_ID);
-		num++;
-		String ID = "SP"; 
-		for(int i=String.valueOf(num).length();i<8;i++) {
-			ID+="0";
-		}
-		ID+=num;
+		String ID = UUID.randomUUID().toString().replaceAll("-", "");
+		
 		System.out.println(reqMap.get("m_image").toString());
 		
 		String imgStr = reqMap.get("m_image").toString();
@@ -174,6 +157,7 @@ public class MarketController {
 				"shenqing",
 				0
 				);
+		market.setM_score(300);
 		marketService.AddMarket(market);
 		return "{\"result\":\"success\"}";
 	}
@@ -182,6 +166,14 @@ public class MarketController {
 	public String deleteMarket(@RequestBody String m_ID) {
 		System.out.println(m_ID);
 		marketService.deleteMarket(m_ID);
+		return "{\"result\":\"success\"}";
+	}
+	
+	@RequestMapping("/recoverMarket")
+	@ResponseBody
+	public String recoverMarket(@RequestBody String m_ID) {
+		System.out.println(m_ID);
+		marketService.recoverMarket(m_ID);
 		return "{\"result\":\"success\"}";
 	}
 }

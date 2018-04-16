@@ -88,6 +88,12 @@ public class MarketServiceImpl implements MarketService {
 		return marketDao.findOne(m_ID);
 	}
 
+	@Override
+	public void recoverMarket(String m_ID) {
+		// TODO Auto-generated method stub
+		marketDao.recover(m_ID);
+	}
+
 	
 
 	

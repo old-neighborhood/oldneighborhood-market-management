@@ -50,4 +50,10 @@ public interface MarketDao extends JpaRepository<Market, String> {
 			+ " from market order by m_date desc limit 1" , nativeQuery=true)
 	String getM_ID();
 
+	@Transactional
+	@Modifying
+	@Query(value="update market as m set m.m_state='zhengchang' where m.m_ID=?" ,
+			nativeQuery=true)
+	void recover(String m_ID);
+
 }
