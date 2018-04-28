@@ -30,7 +30,7 @@ import com.example.demo.entity.Market;
 
 public interface MarketDao extends JpaRepository<Market, String> {
 	@Query(value="select m_ID, m_name, s_ID, m_image, m_address, "
-			+ "m_type, m_tele, m_email, m_intro, m_state,m_score,m_date"
+			+ "m_type, m_tele, m_email, m_intro, m_state,m_view,m_score,m_date"
 			+ " from market where s_ID=? order by m_date desc" , nativeQuery=true)
 	List<Market> findByS_ID(String s_ID);
 

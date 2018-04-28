@@ -88,6 +88,8 @@ public class Market implements Serializable {
 	@NonNull
 	private String m_state;
 	@NonNull
+	private Integer m_view;
+	@NonNull
 	private Integer m_score;
 	@Column(columnDefinition = "timestamp not null default now()", updatable = false)
 	private Timestamp m_date;
